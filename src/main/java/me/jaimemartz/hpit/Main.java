@@ -85,7 +85,7 @@ public final class Main extends JavaPlugin implements Listener {
                 String cursor = cursors.remove(event.getPlayer().getUniqueId());
                 String last = cursor.substring(cursor.lastIndexOf(' ') + 1);
                 getServer().getOnlinePlayers().forEach(other -> {
-                    if (other.getName().startsWith(last)) {
+                    if (other.getName().startsWith(last.toLowerCase().replaceAll("\\s+", ""))) {
                         completions.add(other.getName());
                     }
                 });
