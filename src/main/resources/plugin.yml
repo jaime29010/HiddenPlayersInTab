@@ -1,0 +1,7 @@
+name: HiddenPlayersInTab
+version: ${project.version}
+main: me.jaimemartz.hpit.Main
+depend: [ProtocolLib]
+#commands:
+#  test:
+#    description: This is a test
