@@ -32,21 +32,6 @@ public final class Main extends JavaPlugin implements Listener {
     @Override
     public void onEnable() {
         manager = ProtocolLibrary.getProtocolManager();
-        /*
-        manager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Server.ENTITY_DESTROY) {
-            @Override
-            public void onPacketReceiving(PacketEvent event) {
-                getLogger().info(String.format("Receiving: type %s", event.getPacketType()));
-                printFields(event.getPacket().getHandle());
-            }
-
-            @Override
-            public void onPacketSending(PacketEvent event) {
-                getLogger().info(String.format("Sending: type %s", event.getPacketType()));
-                printFields(event.getPacket().getHandle());
-            }
-        });
-        */
         manager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Server.PLAYER_INFO) {
             @Override
             public void onPacketSending(PacketEvent event) {
@@ -85,7 +70,7 @@ public final class Main extends JavaPlugin implements Listener {
                 String cursor = cursors.remove(event.getPlayer().getUniqueId());
                 String last = cursor.substring(cursor.lastIndexOf(' ') + 1);
                 getServer().getOnlinePlayers().forEach(other -> {
-                    if (other.getName().startsWith(last.toLowerCase().replaceAll("\\s+", ""))) {
+                    if (other.getName().startsWith(last)) {
                         completions.add(other.getName());
                     }
                 });
@@ -96,7 +81,9 @@ public final class Main extends JavaPlugin implements Listener {
         manager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Client.TAB_COMPLETE) {
             @Override
             public void onPacketReceiving(PacketEvent event) {
-                cursors.put(event.getPlayer().getUniqueId(), event.getPacket().getStrings().read(0));
+                String cursor = event.getPacket().getStrings().read(0);
+                cursors.put(event.getPlayer().getUniqueId(), cursor);
+                //getLogger().info(String.format("cursor value: \"%s\"", cursor));
             }
         });
 
