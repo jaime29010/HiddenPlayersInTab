@@ -3,5 +3,6 @@ version: ${project.version}
 main: me.jaimemartz.hpit.Main
 depend: [ProtocolLib]
 commands:
-  test:
+  testhide:
     description: This is a test
+    permission: hiddenplayersintab.testhide
